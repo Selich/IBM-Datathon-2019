@@ -1,0 +1,5 @@
+Input:
+    koliko puta je prekrsio deadline
+    da li je pred bankrotom? (Algoritam daje verovatnocu - koef)
+
+

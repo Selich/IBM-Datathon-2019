@@ -1,0 +1,48 @@
+import numpy as np
+import tensorflow as tf
+from tensorflow import keras
+import argparse
+import pandas as pd
+import numpy as np
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-i',
+            '--id',
+            help="id_firme",
+            required=True)
+
+    parser.add_argument('-model',
+            '--model_path',
+            help="Input path of model",
+            required=True)
+    parser.add_argument('-s',
+            '--suma',
+            help="Zeljena suma",
+            required=True)
+    args = parser.parse_args()
+    df = pd.read_csv("../data/dataset_final.csv")
+    df = df[df['KupacID'] == int(args.id)]
+    df = df.drop(['target','index','bankrot'],axis=1)
+    features = df.values
+    model = keras.models.load_model(args.model_path)
+
+    predictions = model.predict_classes(features)
+    print(predictions)
+    counts = np.bincount(predictions)
+    prediction = np.argmax(counts)
+
+    rand = np.random.uniform()
+    suma = int(args.suma)
+
+    if suma == 500000:
+        if rand < 0.1 and prediction != 3:
+            prediction += 1
+    elif suma == 2000000:
+        if rand < 0.3 and prediction !=3:
+            prediction += 1
+    elif suma == 4000000:
+        if rand < 0.3 and prediction !=3:
+            prediction += 1
+if __name__ == "__main__":
+    main()
