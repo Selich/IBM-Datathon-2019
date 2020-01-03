@@ -10,8 +10,6 @@ def procitaj_nesredjen(df):
     df = df.drop('Unnamed: 0',axis=1)
     df = df[~df.isin([np.nan, np.inf, -np.inf]).any(1)]
 #print(df.head())
-# Convert DataFrame to matrix if all are float or convertable to float                                                                                      
-    mat = df.values
     ids = mat[:,0]
     ids = ids.reshape((848,1))
     X = mat[:,1::3]
